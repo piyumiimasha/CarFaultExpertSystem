@@ -145,7 +145,7 @@
 )
 
 ;; ============================================
-;; RULES
+;; RULES WITH EXPLANATIONS
 ;; ============================================
 
 ;; R01 - Weak battery
@@ -160,7 +160,12 @@
    (assert
       (rule-fired
          (rule-id R01)))
+   (assert
+      (explanation
+         (rule-id R01)
+         (message "The engine turns slowly, indicating a possible weak battery.")))
 )
+
 
 ;; R02 - Weak battery
 (defrule R02-weak-battery-dim-headlights
@@ -174,7 +179,12 @@
    (assert
       (rule-fired
          (rule-id R02)))
+   (assert
+      (explanation
+         (rule-id R02)
+         (message "Dim headlights can indicate a possible weak battery.")))
 )
+
 
 ;; R03 - Weak battery
 (defrule R03-weak-battery-dim-interior-lights
@@ -188,7 +198,12 @@
    (assert
       (rule-fired
          (rule-id R03)))
+   (assert
+      (explanation
+         (rule-id R03)
+         (message "Dim interior lights can indicate a possible weak battery.")))
 )
+
 
 ;; R04 - Battery problem
 (defrule R04-battery-problem-electrical
@@ -202,9 +217,14 @@
    (assert
       (rule-fired
          (rule-id R04)))
+   (assert
+      (explanation
+         (rule-id R04)
+         (message "Strange electrical equipment behaviour can indicate a battery problem.")))
 )
 
-;; R05 - Weak battery / connection problem
+
+;; R05 - Battery or connection problem
 (defrule R05-battery-starting-problem
    (symptom
       (id S05)
@@ -216,9 +236,14 @@
    (assert
       (rule-fired
          (rule-id R05)))
+   (assert
+      (explanation
+         (rule-id R05)
+         (message "Rapid clicking when starting can indicate a weak battery or an electrical connection problem.")))
 )
 
-;; R06 - Fuel / ignition / engine management
+
+;; R06 - Fuel, ignition or engine management problem
 (defrule R06-engine-does-not-start
    (symptom
       (id S06)
@@ -230,7 +255,12 @@
    (assert
       (rule-fired
          (rule-id R06)))
+   (assert
+      (explanation
+         (rule-id R06)
+         (message "If the engine cranks but does not start, the fuel, ignition or engine management system may need investigation.")))
 )
+
 
 ;; R07 - Low tyre pressure
 (defrule R07-low-tyre-pressure
@@ -244,9 +274,14 @@
    (assert
       (rule-fired
          (rule-id R07)))
+   (assert
+      (explanation
+         (rule-id R07)
+         (message "A visibly low tyre can indicate low tyre pressure.")))
 )
 
-;; R08 - Tyre / TPMS problem
+
+;; R08 - Tyre or TPMS problem
 (defrule R08-tyre-pressure-warning
    (symptom
       (id S08)
@@ -258,7 +293,12 @@
    (assert
       (rule-fired
          (rule-id R08)))
+   (assert
+      (explanation
+         (rule-id R08)
+         (message "A tyre pressure warning that remains can indicate a slow puncture, damaged tyre or TPMS problem.")))
 )
+
 
 ;; R09 - Wheel alignment problem
 (defrule R09-wheel-alignment
@@ -272,7 +312,12 @@
    (assert
       (rule-fired
          (rule-id R09)))
+   (assert
+      (explanation
+         (rule-id R09)
+         (message "Tyre wear on one edge can indicate a wheel alignment problem.")))
 )
+
 
 ;; R10 - Worn brake pads
 (defrule R10-worn-brake-pads
@@ -286,7 +331,12 @@
    (assert
       (rule-fired
          (rule-id R10)))
+   (assert
+      (explanation
+         (rule-id R10)
+         (message "High-pitched brake squealing can indicate worn brake pads.")))
 )
+
 
 ;; R11 - Serious brake wear
 (defrule R11-serious-brake-wear
@@ -300,7 +350,12 @@
    (assert
       (rule-fired
          (rule-id R11)))
+   (assert
+      (explanation
+         (rule-id R11)
+         (message "Grinding noises from the brakes can indicate serious brake wear.")))
 )
+
 
 ;; R12 - Brake problem
 (defrule R12-brake-problem
@@ -314,7 +369,12 @@
    (assert
       (rule-fired
          (rule-id R12)))
+   (assert
+      (explanation
+         (rule-id R12)
+         (message "Vibration while braking can indicate a brake problem.")))
 )
+
 
 ;; R13 - Engine overheating
 (defrule R13-engine-overheating
@@ -328,7 +388,12 @@
    (assert
       (rule-fired
          (rule-id R13)))
+   (assert
+      (explanation
+         (rule-id R13)
+         (message "A temperature gauge entering the red zone indicates engine overheating.")))
 )
+
 
 ;; R14 - Engine overheating
 (defrule R14-steam-from-bonnet
@@ -342,7 +407,12 @@
    (assert
       (rule-fired
          (rule-id R14)))
+   (assert
+      (explanation
+         (rule-id R14)
+         (message "Steam coming from the bonnet can indicate engine overheating.")))
 )
+
 
 ;; R15 - Cooling system problem
 (defrule R15-cooling-system-problem
@@ -356,9 +426,14 @@
    (assert
       (rule-fired
          (rule-id R15)))
+   (assert
+      (explanation
+         (rule-id R15)
+         (message "A low coolant level can indicate a problem with the cooling system.")))
 )
 
-;; R16 - Oil pressure / oil problem
+
+;; R16 - Oil pressure or oil problem
 (defrule R16-oil-warning
    (symptom
       (id S16)
@@ -370,7 +445,12 @@
    (assert
       (rule-fired
          (rule-id R16)))
+   (assert
+      (explanation
+         (rule-id R16)
+         (message "An oil warning light can indicate an oil pressure or engine oil problem.")))
 )
+
 
 ;; R17 - Low engine oil
 (defrule R17-low-engine-oil
@@ -384,9 +464,14 @@
    (assert
       (rule-fired
          (rule-id R17)))
+   (assert
+      (explanation
+         (rule-id R17)
+         (message "A low engine oil level indicates a possible low-engine-oil problem.")))
 )
 
-;; R18 - A/C system problem
+
+;; R18 - Air conditioning system problem
 (defrule R18-air-conditioning-problem
    (symptom
       (id S18)
@@ -398,7 +483,12 @@
    (assert
       (rule-fired
          (rule-id R18)))
+   (assert
+      (explanation
+         (rule-id R18)
+         (message "Air conditioning that does not produce cold air can indicate an A/C system problem.")))
 )
+
 
 ;; R19 - Engine performance problem
 (defrule R19-slow-acceleration
@@ -412,7 +502,12 @@
    (assert
       (rule-fired
          (rule-id R19)))
+   (assert
+      (explanation
+         (rule-id R19)
+         (message "Slower-than-normal acceleration can indicate an engine performance problem.")))
 )
+
 
 ;; R20 - Engine performance problem
 (defrule R20-acceleration-hesitation
@@ -426,4 +521,8 @@
    (assert
       (rule-fired
          (rule-id R20)))
+   (assert
+      (explanation
+         (rule-id R20)
+         (message "Engine hesitation during acceleration can indicate an engine performance problem.")))
 )

@@ -307,6 +307,18 @@ else:
 
     print("No possible fault could be determined.")
 
+print("\n" + "-" * 60)
+print("REASONING / EXPLANATION")
+print("-" * 60)
+
+for fact in environment.facts():
+
+    if fact.template.name == "explanation":
+        print(
+            f"{fact['rule-id']}: "
+            f"{fact['message']}"
+        )
+
 
 print("\n" + "=" * 60)
 print("Diagnosis completed.")
