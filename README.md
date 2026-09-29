@@ -19,7 +19,7 @@ Install Python 3.x if it is not already installed. To verify the installation, o
 python --version
 ```
 
-Install `clipspy` from the project folder:
+Install `clipspy` from the project folder using:
 
 ```text
 pip install clipspy
@@ -35,7 +35,12 @@ Car_Fault_Diagnosis/
 └── car_diagnosis.clp
 ```
 
-Do not rename `car_diagnosis.clp` unless the filename is also changed in the Python program.
+- `diagnosis.py` - Main Python program and user interface.
+- `car_diagnosis.clp` - CLIPS knowledge base containing the facts and diagnostic rules.
+
+Important: Both files must be kept in the same folder because the Python program loads `car_diagnosis.clp`.
+
+Do not rename `car_diagnosis.clp` unless the corresponding filename is also changed in `diagnosis.py`.
 
 ### 8.4 Starting the Expert System
 
@@ -49,13 +54,39 @@ python diagnosis.py
 
 1. Select one of the six problem categories.
 2. Answer the displayed symptom questions using `YES` or `NO`.
-3. Review the identified facts.
-4. Review the forward-chaining rules that fired.
-5. Review the backward-chaining goal checks.
-6. Review the possible faults and explanations.
+3. Review the observed facts identified from the answers.
+4. Select one of the three diagnosis modes.
+5. Review the inference results and explanations produced by the selected mode.
+6. If using **Check a Possible Fault**, another fault can be selected if the first selected fault cannot be proved.
 
-Invalid answers, such as `maybe`, are rejected. The question is repeated until a valid `YES` or `NO` response is provided.
+Invalid answers such as `maybe`, `yes123`, or `abc` are rejected. The question is repeated until a valid `YES` or `NO` response is provided.
 
-### 8.6 Example
+#### 8.5.1 Diagnose from My Symptoms
 
-For a starting problem, if the user reports dim headlights (`S02`) and rapid clicking when starting (`S05`), the system can trigger `R02` and `R05`. It then displays the corresponding possible battery-related faults and reasoning.
+This option starts with the symptoms provided by the user and uses forward chaining to identify possible faults.
+
+The reasoning follows:
+
+```text
+Observed Symptoms -> Rules -> Possible Faults
+```
+
+The system displays the applicable rules and the possible faults derived from the observed symptoms.
+
+#### 8.5.2 Check a Possible Fault
+
+This option allows the user to start with a possible fault and verify whether the observed symptoms support it.
+
+The reasoning follows:
+
+```text
+Possible Fault -> Supporting Rule -> Required Symptom -> Fact
+```
+
+If the selected fault cannot be proved, the system allows the user to select another relevant fault. Previously checked faults are not offered again.
+
+#### 8.5.3 Compare Both Approaches
+
+This option runs both forward and backward reasoning and displays their results.
+
+It allows the user to compare the conclusions obtained using the two inference approaches.
