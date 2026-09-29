@@ -73,6 +73,43 @@ QUESTIONS = {
 
 
 # ============================================================
+# BACKWARD-CHAINING RULE INDEX
+# ============================================================
+
+BACKWARD_RULES = {
+    "weak-battery": [("R01", "S01"), ("R02", "S02"), ("R03", "S03")],
+    "battery-problem": [("R04", "S04")],
+    "battery-or-connection-problem": [("R05", "S05")],
+    "fuel-ignition-or-engine-management-problem": [("R06", "S06")],
+    "low-tyre-pressure": [("R07", "S07")],
+    "slow-puncture-damaged-tyre-or-tpms-problem": [("R08", "S08")],
+    "wheel-alignment-problem": [("R09", "S09")],
+    "worn-brake-pads": [("R10", "S10")],
+    "serious-brake-wear": [("R11", "S11")],
+    "brake-problem": [("R12", "S12")],
+    "engine-overheating": [("R13", "S13"), ("R14", "S14")],
+    "cooling-system-problem": [("R15", "S15")],
+    "oil-pressure-or-oil-problem": [("R16", "S16")],
+    "low-engine-oil": [("R17", "S17")],
+    "air-conditioning-system-problem": [("R18", "S18")],
+    "engine-performance-problem": [("R19", "S19"), ("R20", "S20")]
+}
+
+
+def backward_chain(goal, observed_symptoms):
+    """Check whether an observed symptom supports a proposed fault goal."""
+
+    supporting_rules = BACKWARD_RULES.get(goal, [])
+    supported_by = [
+        (rule_id, symptom_id)
+        for rule_id, symptom_id in supporting_rules
+        if symptom_id in observed_symptoms
+    ]
+
+    return supported_by
+
+
+# ============================================================
 # YES / NO FUNCTION
 # ============================================================
 
