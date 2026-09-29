@@ -494,36 +494,60 @@ PASS
 TC12 - Invalid Input
 ============================================================
 
-Category:
-Any category
+Category: Any category
 
 Input:
-- Invalid answers such as "maybe", "yes123", or "abc"
+
+Invalid response such as maybe, yes123, or abc
 
 Expected Behaviour:
-- System rejects the invalid input.
-- System asks the user to enter Yes or No again.
-- Inference should proceed only after a valid Yes/No answer is supplied.
 
-Forward Chaining:
-- No inference should be performed until valid symptom facts are obtained.
-
-Backward Chaining:
-- No backward goal evaluation should be based on an invalid response.
-- Backward chaining should proceed only after the user's response has
-  been converted into a valid observed symptom state.
-
-Expected Result:
-- Diagnosis continues only after a valid Yes/No answer is provided.
+Invalid input is rejected.
+User is asked to enter Yes or No again.
+The question is repeated until a valid response is provided.
 
 Actual Result:
-- Invalid input is rejected.
-- The system requests a valid Yes/No response.
-- Inference continues after valid input is provided.
 
-Status:
-PASS
+Invalid input was rejected and the question was repeated.
+The system continued only after a valid Yes/No response was entered.
 
+Status: PASS
+
+
+============================================================
+TC13 - Backward Chaining: Try Another Fault
+============================================================
+
+Category: Starting Problem
+
+Input:
+
+Select Check a Possible Fault.
+Select Fuel, Ignition or Engine Management Problem.
+S06 = No.
+Select Yes when asked whether to check another possible fault.
+Select Weak Battery.
+S01 = Yes.
+
+Expected Behaviour:
+
+The selected Fuel, Ignition or Engine Management Problem is checked using backward chaining.
+R06 requires S06.
+Since S06 = No, the selected fault is not proved.
+The system allows the user to check another possible fault.
+The previously checked fault is not offered again.
+Weak Battery is then checked.
+R01 requires S01.
+Since S01 = Yes, Weak Battery is proved.
+
+Actual Result:
+
+R06 was checked and the first selected fault was not proved.
+The system allowed another possible fault to be selected.
+Weak Battery was checked using R01.
+Weak Battery was successfully proved.
+
+Status: PASS
 
 ============================================================
 OVERALL TESTING RESULT

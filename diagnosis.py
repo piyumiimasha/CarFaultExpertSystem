@@ -275,26 +275,52 @@ def backward_chain(goal, observed_symptoms):
 # RUN BACKWARD CHAINING
 # ============================================================
 
-def run_backward_chaining(observed_symptoms, category_symptoms):
 
-    section("2. BACKWARD CHAINING")
+def run_backward_chaining(observed_symptoms, category_symptoms):
+    section("BACKWARD CHAINING")
 
     print()
     print("  Reasoning direction:")
     print("  POSSIBLE FAULT  →  RULE  →  REQUIRED SYMPTOM  →  FACT")
     print()
 
-    goals = relevant_goals(category_symptoms)
+    available_goals = relevant_goals(category_symptoms)
+    checked_goals = []
 
-    proved_goals = []
-    failed_goals = []
+    while len(checked_goals) < len(available_goals):
 
-    for goal in goals:
+        remaining_goals = [
+            goal for goal in available_goals
+            if goal not in checked_goals
+        ]
 
-        proved, trace = backward_chain(
-            goal,
-            observed_symptoms
-        )
+        section("SELECT POSSIBLE FAULT")
+
+        print()
+        print("  Choose a possible fault to check:")
+        print()
+
+        for index, goal in enumerate(remaining_goals, start=1):
+            print(f"  [{index}] {clean_name(goal)}")
+
+        print()
+
+        while True:
+            choice = input(
+                f"  Enter fault number (1-{len(remaining_goals)}): "
+            ).strip()
+
+            if choice.isdigit() and 1 <= int(choice) <= len(remaining_goals):
+                goal = remaining_goals[int(choice) - 1]
+                break
+
+            print(
+                f"  ! Invalid choice. Please select 1-{len(remaining_goals)}."
+            )
+
+        checked_goals.append(goal)
+
+        proved, trace = backward_chain(goal, observed_symptoms)
 
         print()
         print("  " + "─" * (WIDTH - 4))
@@ -304,25 +330,37 @@ def run_backward_chaining(observed_symptoms, category_symptoms):
         for step in trace[1:]:
             print("  " + step)
 
+        print()
+        print("  BACKWARD CHAINING RESULT")
+        print("  " + "─" * 35)
+
         if proved:
-            proved_goals.append(goal)
-        else:
-            failed_goals.append(goal)
+            print(f"  ✓ {clean_name(goal)}")
+            return [goal]
+
+        print("  ✗ Selected fault could not be proved.")
+
+        if len(checked_goals) == len(available_goals):
+            break
+
+        while True:
+            again = input(
+                "\n  Would you like to check another possible fault? (yes/no): "
+            ).strip().lower()
+
+            if again in ["yes", "y"]:
+                break
+
+            if again in ["no", "n"]:
+                return []
+
+            print("  ! Please answer yes or no.")
 
     print()
-    print("  BACKWARD CHAINING RESULT")
-    print("  " + "─" * 35)
+    print("  All relevant possible faults have been checked.")
+    print("  No selected fault could be proved from the observed symptoms.")
 
-    if proved_goals:
-
-        for goal in proved_goals:
-            print(f"  ✓ {clean_name(goal)}")
-
-    else:
-
-        print("  No fault goal was proved.")
-
-    return proved_goals
+    return []
 
 
 # ============================================================
@@ -611,7 +649,7 @@ def main():
     )
 
     print(
-        "\n  Forward Chaining + Backward Chaining"
+        "\n  Symptom-Based and Goal-Based Diagnosis"
     )
 
     print(
@@ -698,38 +736,70 @@ def main():
                 )
 
     # --------------------------------------------------------
-    # Forward chaining
+    # Select diagnosis mode
     # --------------------------------------------------------
 
-    rules_fired, forward_faults = (
-        run_forward_chaining(environment)
-    )
+    section("CHOOSE DIAGNOSIS MODE")
 
-    # --------------------------------------------------------
-    # Backward chaining
-    # --------------------------------------------------------
+    print()
+    print("  [1] Diagnose from My Symptoms")
+    print("      Start with your answers and find possible faults.")
+    print()
+    print("  [2] Check a Possible Fault")
+    print("      Start with a possible fault and verify the symptoms.")
+    print()
+    print("  [3] Compare Both Approaches")
+    print("      Run both reasoning methods and compare the results.")
+    print()
 
-    backward_faults = run_backward_chaining(
-        observed_symptoms,
-        category_symptoms
-    )
+    while True:
+        mode = input("  Enter your choice (1-3): ").strip()
+        if mode in ["1", "2", "3"]:
+            break
+        print("  ! Invalid choice. Please select 1-3.")
 
-    # --------------------------------------------------------
+    # Run selected inference method
+    rules_fired = []
+    forward_faults = []
+    backward_faults = []
+
+    if mode in ["1", "3"]:
+        rules_fired, forward_faults = run_forward_chaining(environment)
+
+    if mode in ["2", "3"]:
+        backward_faults = run_backward_chaining(
+            observed_symptoms, category_symptoms
+        )
+
     # Explanation
-    # --------------------------------------------------------
-
     display_explanations(environment)
 
-    # --------------------------------------------------------
     # Final result
-    # --------------------------------------------------------
+    if mode == "1":
+        title("FINAL RESULT")
+        print()
+        print("  DIAGNOSIS FROM MY SYMPTOMS")
+        print("  " + "─" * 35)
+        if forward_faults:
+            for fault in forward_faults:
+                print(f"  ✓ {clean_name(fault)}")
+        else:
+            print("  No fault identified.")
 
-    display_final_result(
-        forward_faults,
-        backward_faults
-    )
+    elif mode == "2":
+        title("FINAL RESULT")
+        print()
+        print("  POSSIBLE FAULT CHECK")
+        print("  " + "─" * 35)
+        if backward_faults:
+            for fault in backward_faults:
+                print(f"  ✓ {clean_name(fault)}")
+        else:
+            print("  ✗ Selected fault was not proved.")
 
-    # --------------------------------------------------------
+    else:
+        display_final_result(forward_faults, backward_faults)
+
     # Finish
     # --------------------------------------------------------
 
