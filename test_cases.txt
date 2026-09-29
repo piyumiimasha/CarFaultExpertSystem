@@ -1,0 +1,182 @@
+CAR FAULT DIAGNOSIS EXPERT SYSTEM
+TEST CASES
+
+TC01 - Weak Battery
+Category: Starting Problem
+Input:
+- S02: Dim headlights = Yes
+- S05: Rapid clicking when starting = Yes
+Expected Rules:
+- R02
+- R05
+Expected Diagnosis:
+- Weak battery
+- Battery or connection problem
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC02 - Engine Cranks but Does Not Start
+Category: Starting Problem
+Input:
+- S06: Engine cranks but does not start = Yes
+Expected Rules:
+- R06
+Expected Diagnosis:
+- Fuel, ignition or engine management problem
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC03 - Brake Grinding
+Category: Braking Problem
+Input:
+- S11: Brake grinding = Yes
+Expected Rules:
+- R11
+Expected Diagnosis:
+- Serious brake wear
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC04 - Multiple Braking Symptoms
+Category: Braking Problem
+Input:
+- S10: Brake squealing = Yes
+- S11: Brake grinding = Yes
+- S12: Car vibrates while braking = Yes
+Expected Rules:
+- R10
+- R11
+- R12
+Expected Diagnosis:
+- Worn brake pads
+- Serious brake wear
+- Brake problem
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC05 - Low Tyre Pressure
+Category: Tyre Problem
+Input:
+- S07: Tyre looks low = Yes
+Expected Rules:
+- R07
+Expected Diagnosis:
+- Low tyre pressure
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC06 - Wheel Alignment Problem
+Category: Tyre Problem
+Input:
+- S09: Tyre worn on one edge = Yes
+Expected Rules:
+- R09
+Expected Diagnosis:
+- Wheel alignment problem
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC07 - Engine Overheating
+Category: Engine / Temperature Problem
+Input:
+- S13: Temperature gauge in red = Yes
+- S14: Steam from bonnet = Yes
+- S15: Coolant level low = Yes
+Expected Rules:
+- R13
+- R14
+- R15
+Expected Diagnosis:
+- Engine overheating
+- Cooling system problem
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC08 - Engine Performance Problem
+Category: Engine / Temperature Problem
+Input:
+- S19: Slow acceleration = Yes
+- S20: Hesitation during acceleration = Yes
+Expected Rules:
+- R19
+- R20
+Expected Diagnosis:
+- Engine performance problem
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC09 - Oil Problem
+Category: Oil Problem
+Input:
+- S16: Oil warning light = Yes
+- S17: Oil level low = Yes
+Expected Rules:
+- R16
+- R17
+Expected Diagnosis:
+- Oil pressure or engine oil problem
+- Low engine oil
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC10 - Air Conditioning Problem
+Category: Air Conditioning Problem
+Input:
+- S18: Air conditioning is not cold = Yes
+Expected Rules:
+- R18
+Expected Diagnosis:
+- Air conditioning system problem
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC11 - No Symptoms
+Category: Any category
+Input:
+- All symptoms = No
+Expected Rules:
+- None
+Expected Diagnosis:
+- No fault identified
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+TC12 - Invalid Input
+Category: Any category
+Input:
+- Enter an invalid answer such as "maybe", "yes123", or "abc"
+Expected Behaviour:
+- System should reject the invalid input
+- System should ask the user to enter Yes or No again
+Expected Result:
+- Diagnosis continues only after a valid Yes/No answer is provided
+Actual Result:
+- Expected result returned
+Status: PASS
+
+
+OVERALL TESTING RESULT
+
+All 12 test cases passed successfully. The actual results matched the expected results for every test case.

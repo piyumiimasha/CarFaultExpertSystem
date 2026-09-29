@@ -1,217 +1,168 @@
 import clips
 
 
-# -------------------------------------------------
-# Symptom keywords
-# -------------------------------------------------
+# ============================================================
+# PROBLEM CATEGORIES
+# ============================================================
 
-SYMPTOMS = {
-    "S01": [
-        "engine turns slowly",
-        "engine turning slowly",
-        "slow engine",
-        "slowly when starting",
-        "engine is slow"
-    ],
+CATEGORIES = {
+    "1": {
+        "name": "Starting Problem",
+        "symptoms": ["S01", "S02", "S03", "S04", "S05", "S06"]
+    },
 
-    "S02": [
-        "headlights dim",
-        "headlights are dim",
-        "dim headlights",
-        "head lights dim"
-    ],
+    "2": {
+        "name": "Braking Problem",
+        "symptoms": ["S10", "S11", "S12"]
+    },
 
-    "S03": [
-        "interior lights dim",
-        "inside lights dim",
-        "interior light is dim"
-    ],
+    "3": {
+        "name": "Tyre Problem",
+        "symptoms": ["S07", "S08", "S09"]
+    },
 
-    "S04": [
-        "electrical equipment strange",
-        "electrical problems",
-        "electrical equipment behaving strangely",
-        "electrical system problem"
-    ],
+    "4": {
+        "name": "Engine / Temperature Problem",
+        "symptoms": ["S13", "S14", "S15", "S19", "S20"]
+    },
 
-    "S05": [
-        "rapid clicking",
-        "clicking sound",
-        "clicking when starting",
-        "clicking noise when starting"
-    ],
+    "5": {
+        "name": "Oil Problem",
+        "symptoms": ["S16", "S17"]
+    },
 
-    "S06": [
-        "engine cranks but does not start",
-        "engine cranks but won't start",
-        "engine does not start",
-        "car won't start",
-        "car does not start"
-    ],
-
-    "S07": [
-        "tyre looks low",
-        "tire looks low",
-        "flat tyre",
-        "flat tire",
-        "low tyre",
-        "low tire"
-    ],
-
-    "S08": [
-        "tyre pressure warning",
-        "tire pressure warning",
-        "tyre pressure light",
-        "tire pressure light",
-        "pressure warning remains"
-    ],
-
-    "S09": [
-        "tyre worn on one edge",
-        "tire worn on one edge",
-        "uneven tyre wear",
-        "uneven tire wear",
-        "tyre wear on one side",
-        "tire wear on one side"
-    ],
-
-    "S10": [
-        "brake squealing",
-        "brakes squeal",
-        "brake squealing noise",
-        "high pitched brake noise",
-        "high-pitched brake noise"
-    ],
-
-    "S11": [
-        "brake grinding",
-        "brakes grinding",
-        "grinding brakes",
-        "grinding noise when braking"
-    ],
-
-    "S12": [
-        "car vibrates while braking",
-        "car shakes while braking",
-        "vibration when braking",
-        "vibrates when braking",
-        "shaking when braking"
-    ],
-
-    "S13": [
-        "temperature gauge red",
-        "temperature gauge in red",
-        "temperature is in the red",
-        "engine temperature high",
-        "temperature gauge overheating"
-    ],
-
-    "S14": [
-        "steam from bonnet",
-        "steam from hood",
-        "steam coming from bonnet",
-        "steam coming from hood"
-    ],
-
-    "S15": [
-        "coolant level low",
-        "low coolant",
-        "coolant is low",
-        "coolant level is low"
-    ],
-
-    "S16": [
-        "oil warning light",
-        "oil light is on",
-        "oil warning",
-        "engine oil warning light"
-    ],
-
-    "S17": [
-        "oil level low",
-        "low engine oil",
-        "engine oil is low",
-        "low oil level"
-    ],
-
-    "S18": [
-        "air conditioning not cold",
-        "air conditioner not cold",
-        "ac not cold",
-        "ac is not cold",
-        "air conditioning is not cold",
-        "air conditioner blowing warm air"
-    ],
-
-    "S19": [
-        "slow acceleration",
-        "acceleration is slow",
-        "car accelerates slowly",
-        "slower acceleration",
-        "slow to accelerate"
-    ],
-
-    "S20": [
-        "engine hesitates",
-        "hesitation during acceleration",
-        "engine hesitation",
-        "hesitates when accelerating",
-        "car hesitates when accelerating"
-    ]
+    "6": {
+        "name": "Air Conditioning Problem",
+        "symptoms": ["S18"]
+    }
 }
 
 
-# -------------------------------------------------
-# Load CLIPS
-# -------------------------------------------------
+# ============================================================
+# QUESTIONS
+# ============================================================
+
+QUESTIONS = {
+    "S01": "Does the engine turn slowly when starting?",
+    "S02": "Are the headlights dim?",
+    "S03": "Are the interior lights dim?",
+    "S04": "Is the electrical equipment behaving strangely?",
+    "S05": "Does the car make a rapid clicking sound when starting?",
+    "S06": "Does the engine crank but not start?",
+
+    "S07": "Does a tyre look low?",
+    "S08": "Does the tyre pressure warning remain on?",
+    "S09": "Is a tyre worn on one edge?",
+
+    "S10": "Do the brakes make a squealing noise?",
+    "S11": "Do the brakes make a grinding noise?",
+    "S12": "Does the car vibrate while braking?",
+
+    "S13": "Is the temperature gauge in the red?",
+    "S14": "Is steam coming from the bonnet?",
+    "S15": "Is the coolant level low?",
+
+    "S16": "Is the oil warning light on?",
+    "S17": "Is the engine oil level low?",
+
+    "S18": "Is the air conditioning not producing cold air?",
+
+    "S19": "Is the car accelerating slowly?",
+    "S20": "Does the engine hesitate during acceleration?"
+}
+
+
+# ============================================================
+# YES / NO FUNCTION
+# ============================================================
+
+def ask_question(question):
+
+    while True:
+
+        answer = input(question + " (yes/no): ").strip().lower()
+
+        if answer in ["yes", "y"]:
+            return True
+
+        elif answer in ["no", "n"]:
+            return False
+
+        else:
+            print("Please answer yes or no.")
+
+
+# ============================================================
+# LOAD CLIPS
+# ============================================================
 
 environment = clips.Environment()
 
 environment.load("car_diagnosis.clp")
+
 environment.reset()
 
 
-# -------------------------------------------------
-# Get user's problem
-# -------------------------------------------------
+# ============================================================
+# MAIN USER INTERFACE
+# ============================================================
 
 print("=" * 60)
 print("        CAR FAULT DIAGNOSIS EXPERT SYSTEM")
 print("=" * 60)
 
-print("\nDescribe the problem with your car.")
-print("You can mention multiple problems in one sentence.")
-print("\nExample:")
-print("My car makes a clicking sound when starting and the")
-print("headlights are dim.")
+print("\nWhat type of problem are you experiencing?\n")
 
-user_input = input("\nYour problem: ")
-
-text = user_input.lower()
-
-
-# -------------------------------------------------
-# Identify symptoms
-# -------------------------------------------------
-
-detected_symptoms = []
-
-for symptom_id, keywords in SYMPTOMS.items():
-
-    for keyword in keywords:
-
-        if keyword in text:
-            detected_symptoms.append(symptom_id)
-            break
+print("1. Starting problem")
+print("2. Braking problem")
+print("3. Tyre problem")
+print("4. Engine / temperature problem")
+print("5. Oil problem")
+print("6. Air conditioning problem")
 
 
-# Remove duplicates
-detected_symptoms = list(dict.fromkeys(detected_symptoms))
+# ============================================================
+# GET CATEGORY
+# ============================================================
+
+while True:
+
+    category = input("\nSelect an option (1-6): ").strip()
+
+    if category in CATEGORIES:
+        break
+
+    print("Please select a number from 1 to 6.")
 
 
-# -------------------------------------------------
-# Update CLIPS facts
-# -------------------------------------------------
+selected_category = CATEGORIES[category]
+
+print("\n" + "-" * 60)
+print(selected_category["name"].upper())
+print("-" * 60)
+
+print("\nPlease answer the following questions.\n")
+
+
+# ============================================================
+# ASK RELEVANT QUESTIONS
+# ============================================================
+
+observed_symptoms = []
+
+for symptom_id in selected_category["symptoms"]:
+
+    question = QUESTIONS[symptom_id]
+
+    answer = ask_question(question)
+
+    if answer:
+        observed_symptoms.append(symptom_id)
+
+
+# ============================================================
+# UPDATE CLIPS FACTS
+# ============================================================
 
 for fact in environment.facts():
 
@@ -219,25 +170,31 @@ for fact in environment.facts():
 
         symptom_id = str(fact["id"])
 
-        if symptom_id in detected_symptoms:
-            fact.modify_slots(observed=clips.Symbol("yes"))
+        if symptom_id in observed_symptoms:
+
+            fact.modify_slots(
+                observed=clips.Symbol("yes")
+            )
 
 
-# -------------------------------------------------
-# Show detected facts
-# -------------------------------------------------
+# ============================================================
+# DISPLAY FACTS
+# ============================================================
 
 print("\n" + "-" * 60)
-print("DETECTED SYMPTOMS")
+print("FACTS IDENTIFIED")
 print("-" * 60)
 
-if detected_symptoms:
+if observed_symptoms:
 
     for fact in environment.facts():
 
         if fact.template.name == "symptom":
 
-            if str(fact["id"]) in detected_symptoms:
+            symptom_id = str(fact["id"])
+
+            if symptom_id in observed_symptoms:
+
                 print(
                     f"{fact['id']}: "
                     f"{fact['name']} "
@@ -246,19 +203,25 @@ if detected_symptoms:
 
 else:
 
-    print("No known symptoms were detected.")
+    print("No symptoms were reported.")
 
 
-# -------------------------------------------------
-# Run CLIPS inference engine
-# -------------------------------------------------
+# ============================================================
+# FORWARD CHAINING
+# ============================================================
+
+print("\n" + "-" * 60)
+print("FORWARD CHAINING")
+print("-" * 60)
+
+print("Running inference engine...")
 
 environment.run()
 
 
-# -------------------------------------------------
-# Display rules that fired
-# -------------------------------------------------
+# ============================================================
+# RULES APPLIED
+# ============================================================
 
 print("\n" + "-" * 60)
 print("RULES APPLIED")
@@ -273,14 +236,19 @@ for fact in environment.facts():
         rule_id = str(fact["rule-id"])
 
         if rule_id not in rules_fired:
+
             rules_fired.append(rule_id)
 
             print(rule_id)
 
 
-# -------------------------------------------------
-# Display possible faults
-# -------------------------------------------------
+if not rules_fired:
+    print("No rules were triggered.")
+
+
+# ============================================================
+# POSSIBLE FAULTS
+# ============================================================
 
 print("\n" + "-" * 60)
 print("POSSIBLE FAULTS")
@@ -295,6 +263,7 @@ for fact in environment.facts():
         fault = str(fact["name"])
 
         if fault not in faults:
+
             faults.append(fault)
 
 
@@ -307,18 +276,37 @@ else:
 
     print("No possible fault could be determined.")
 
+
+# ============================================================
+# REASONING / EXPLANATION
+# ============================================================
+
 print("\n" + "-" * 60)
 print("REASONING / EXPLANATION")
 print("-" * 60)
 
+explanations_found = False
+
 for fact in environment.facts():
 
     if fact.template.name == "explanation":
+
+        explanations_found = True
+
         print(
             f"{fact['rule-id']}: "
             f"{fact['message']}"
         )
 
+
+if not explanations_found:
+
+    print("No explanation was generated.")
+
+
+# ============================================================
+# FINISH
+# ============================================================
 
 print("\n" + "=" * 60)
 print("Diagnosis completed.")
