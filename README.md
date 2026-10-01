@@ -1,8 +1,8 @@
 # Car Fault Expert System
 
-## 8. User Manual
+## User Manual
 
-### 8.1 Required Software
+### Required Software
 
 - Python 3.x
 - CLIPS Python library (`clipspy`)
@@ -11,7 +11,7 @@
 
 Keep the two program files in the same folder.
 
-### 8.2 Installation
+###  Installation
 
 Install Python 3.x if it is not already installed. To verify the installation, open Command Prompt and run:
 
@@ -25,7 +25,7 @@ Install `clipspy` from the project folder using:
 pip install clipspy
 ```
 
-### 8.3 Project Folder Setup
+###  Project Folder Setup
 
 The folder should contain:
 
@@ -42,7 +42,7 @@ Important: Both files must be kept in the same folder because the Python program
 
 Do not rename `car_diagnosis.clp` unless the corresponding filename is also changed in `diagnosis.py`.
 
-### 8.4 Starting the Expert System
+###  Starting the Expert System
 
 Open Command Prompt in the project folder and run:
 
@@ -50,7 +50,7 @@ Open Command Prompt in the project folder and run:
 python diagnosis.py
 ```
 
-### 8.5 Using the System
+###  Using the System
 
 1. Select one of the six problem categories.
 2. Answer the displayed symptom questions using `YES` or `NO`.
@@ -61,7 +61,7 @@ python diagnosis.py
 
 Invalid answers such as `maybe`, `yes123`, or `abc` are rejected. The question is repeated until a valid `YES` or `NO` response is provided.
 
-#### 8.5.1 Diagnose from My Symptoms
+####  Diagnose from My Symptoms
 
 This option starts with the symptoms provided by the user and uses forward chaining to identify possible faults.
 
@@ -73,7 +73,7 @@ Observed Symptoms -> Rules -> Possible Faults
 
 The system displays the applicable rules and the possible faults derived from the observed symptoms.
 
-#### 8.5.2 Check a Possible Fault
+####  Check a Possible Fault
 
 This option allows the user to start with a possible fault and verify whether the observed symptoms support it.
 
