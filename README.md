@@ -85,7 +85,7 @@ Possible Fault -> Supporting Rule -> Required Symptom -> Fact
 
 If the selected fault cannot be proved, the system allows the user to select another relevant fault. Previously checked faults are not offered again.
 
-#### 8.5.3 Compare Both Approaches
+#### Compare Both Approaches
 
 This option runs both forward and backward reasoning and displays their results.
 
